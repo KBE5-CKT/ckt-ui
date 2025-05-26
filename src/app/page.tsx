@@ -5,6 +5,7 @@ import { useTheme } from '@/context/ThemeContext';
 import styled from 'styled-components';
 import { ThemeKey, themeMap } from '@/styles/theme';
 import { motion } from 'framer-motion'; // motion 임포트
+import { useRouter } from 'next/navigation';
 
 // --- styled-components 컴포넌트들 ---
 
@@ -61,7 +62,12 @@ const ThemeOptionButton = styled(motion.button)<{ $isActive: boolean }>`
 `;
 
 export default function Home() {
+  const router = useRouter();
   const { themeKey, setThemeKey } = useTheme();
+
+  const handleLoginClick = () => {
+    router.push('/login');
+  };
 
   const handleThemeChange = (key: ThemeKey) => {
     setThemeKey(key);
@@ -71,7 +77,7 @@ export default function Home() {
   return (
     <Container initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
       <Title
-        key={themeKey} // themeKey가 변경될 때마다 애니메이션을 재시작
+        key={themeKey}
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 100, damping: 10, delay: 0.2 }}
@@ -84,12 +90,12 @@ export default function Home() {
       </p>
 
       <Button
-        onClick={() => alert(`Primary 색상: ${themeMap[themeKey].primary}`)}
-        whileHover={{ scale: 1.05 }} // 호버 시 크기 증가
-        whileTap={{ scale: 0.95 }} // 클릭 시 크기 감소
+        onClick={handleLoginClick}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       >
-        Primary 색상 테스트 버튼
+        로그인 페이지로 이동
       </Button>
 
       <ThemeSelector>
@@ -98,8 +104,8 @@ export default function Home() {
             key={key}
             $isActive={themeKey === key}
             onClick={() => handleThemeChange(key as ThemeKey)}
-            whileHover={{ scale: 1.1 }} // 호버 시 크기 증가
-            whileTap={{ scale: 0.9 }} // 클릭 시 크기 감소
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)} 테마
