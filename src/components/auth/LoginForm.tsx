@@ -10,6 +10,7 @@ import { Text } from '@/components/ui/Text';
 import { InputField } from '@/components/ui/InputField';
 import { Button } from '@/components/ui/Button';
 import { RadioButton } from '@/components/ui/RadioButton';
+import { useRouter } from 'next/navigation';
 
 // --- LoginForm 내부에서만 사용될 styled-components (필요시) ---
 
@@ -71,13 +72,15 @@ const RegisterSection = styled.div`
 `;
 
 export const LoginForm: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Login attempt:', { email, password });
-    // 여기에 실제 로그인 로직 (API 호출, 토큰 저장 등) 추가
+    
+    router.push("/control")
   };
 
   return (
